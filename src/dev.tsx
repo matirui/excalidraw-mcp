@@ -71,6 +71,8 @@ const SAMPLE_ELEMENTS = [
     strokeWidth: 2,
     endArrowhead: "arrow",
     label: { text: "request", fontSize: 14 },
+    start: { id: "client" },
+    end: { id: "server" },
   },
   {
     type: "arrow",
@@ -87,6 +89,8 @@ const SAMPLE_ELEMENTS = [
     strokeWidth: 2,
     endArrowhead: "arrow",
     label: { text: "query", fontSize: 14 },
+    start: { id: "server" },
+    end: { id: "db" },
   },
 ];
 

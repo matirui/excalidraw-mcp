@@ -48,9 +48,19 @@ function convertRawElements(els: any[]): any[] {
   const pseudoTypes = new Set(["cameraUpdate", "delete", "restoreCheckpoint"]);
   const pseudos = els.filter((el: any) => pseudoTypes.has(el.type));
   const real = els.filter((el: any) => !pseudoTypes.has(el.type));
-  const withDefaults = real.map((el: any) =>
-    el.label ? { ...el, label: { textAlign: "center", verticalAlign: "middle", ...el.label } } : el
-  );
+  const withDefaults = real.map((el: any) => {
+    let out = el.label ? { ...el, label: { textAlign: "center", verticalAlign: "middle", ...el.label } } : el;
+    // Fallback: convert standard-format startBinding/endBinding to skeleton start/end
+    if (out.type === "arrow" && out.startBinding && !out.start) {
+      out = { ...out, start: { id: out.startBinding.elementId } };
+      delete out.startBinding;
+    }
+    if (out.type === "arrow" && out.endBinding && !out.end) {
+      out = { ...out, end: { id: out.endBinding.elementId } };
+      delete out.endBinding;
+    }
+    return out;
+  });
   const converted = convertToExcalidrawElements(withDefaults, { regenerateIds: false })
     .map((el: any) => el.type === "text" ? { ...el, fontFamily: (FONT_FAMILY as any).Excalifont ?? 1 } : el);
   return [...converted, ...pseudos];

@@ -95,9 +95,11 @@ Canvas background is white.
 - points: [dx, dy] offsets from element x,y
 - endArrowhead: null | "arrow" | "bar" | "dot" | "triangle"
 
-### Arrow Bindings
-Arrow: \`"startBinding": { "elementId": "r1", "fixedPoint": [1, 0.5] }\`
-fixedPoint: top=[0.5,0], bottom=[0.5,1], left=[0,0.5], right=[1,0.5]
+### Arrow Bindings (sticky arrows)
+To make arrows stick to shapes when moved, use the skeleton API start / end properties:
+- Arrow: \`"start": { "id": "b1" }, "end": { "id": "b2" }\`
+- The arrow attaches to the nearest edge of the target shape automatically
+- You can also pass "type" instead of "id" if the shape was created earlier in the same array and you want the arrow to reference it by type (e.g. \`"start": { "type": "rectangle" }\`)
 
 **cameraUpdate** (pseudo-element — controls the viewport, not drawn):
 \`{ "type": "cameraUpdate", "width": 800, "height": 600, "x": 0, "y": 0 }\`
@@ -125,7 +127,7 @@ fixedPoint: top=[0.5,0], bottom=[0.5,1], left=[0,0.5], right=[1,0.5]
   { "type": "cameraUpdate", "width": 800, "height": 600, "x": 50, "y": 50 },
   { "type": "rectangle", "id": "b1", "x": 100, "y": 100, "width": 200, "height": 100, "roundness": { "type": 3 }, "backgroundColor": "#a5d8ff", "fillStyle": "solid", "label": { "text": "Start", "fontSize": 20 } },
   { "type": "rectangle", "id": "b2", "x": 450, "y": 100, "width": 200, "height": 100, "roundness": { "type": 3 }, "backgroundColor": "#b2f2bb", "fillStyle": "solid", "label": { "text": "End", "fontSize": 20 } },
-  { "type": "arrow", "id": "a1", "x": 300, "y": 150, "width": 150, "height": 0, "points": [[0,0],[150,0]], "endArrowhead": "arrow", "startBinding": { "elementId": "b1", "fixedPoint": [1, 0.5] }, "endBinding": { "elementId": "b2", "fixedPoint": [0, 0.5] } }
+  { "type": "arrow", "id": "a1", "x": 300, "y": 150, "width": 150, "height": 0, "points": [[0,0],[150,0]], "endArrowhead": "arrow", "start": { "id": "b1" }, "end": { "id": "b2" } }
 ]
 \`\`\`
 
